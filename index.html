@@ -3,111 +3,966 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>科研任务时间规划表 - wudichenchen</title>
+    <title>科研任务时间规划表 - 2026年1月-4月</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 保留你原有的精美样式 */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
-        body { background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%); color: #333; line-height: 1.6; padding: 20px; min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        header { text-align: center; margin-bottom: 30px; padding: 20px; background: linear-gradient(to right, #1a6bc4, #0d4d8a); color: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-        .table-container { overflow-x: auto; background-color: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); margin-bottom: 40px; padding: 15px; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        thead { background: linear-gradient(to right, #2c8cda, #1a6bc4); color: white; }
-        th { padding: 18px 15px; text-align: left; }
-        td { padding: 15px; border-bottom: 1px solid #eee; }
-        .duration { color: #0d4d8a; font-weight: 600; background-color: #e8f2ff; padding: 5px 10px; border-radius: 20px; }
-        .milestone-card { background: #f9fbfd; border-radius: 10px; padding: 20px; border-left: 5px solid #1a6bc4; margin-bottom: 10px; }
-        .milestone-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
-        .editable { cursor: text; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(to right, #1a6bc4, #0d4d8a);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .edit-notice {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+        
+        .time-range {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .calendar-icon {
+            color: #ffd166;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+            padding: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        thead {
+            background: linear-gradient(to right, #2c8cda, #1a6bc4);
+            color: white;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        th:first-child {
+            border-radius: 10px 0 0 0;
+        }
+        
+        th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9fbfd;
+        }
+        
+        tr:hover {
+            background-color: #f0f7ff;
+            transition: background-color 0.3s;
+        }
+        
+        .time-period, .task-name, .task-desc, .duration {
+            padding: 8px 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .time-period:hover, .task-name:hover, .task-desc:hover, .duration:hover {
+            border-color: #1a6bc4;
+            background-color: #f8fbff;
+        }
+        
+        .time-period {
+            font-weight: 600;
+            color: #1a6bc4;
+            font-size: 1.05rem;
+        }
+        
+        .task-name {
+            font-weight: 600;
+            color: #222;
+        }
+        
+        .task-desc {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .duration {
+            color: #0d4d8a;
+            font-weight: 600;
+            background-color: #e8f2ff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            width: fit-content;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 20px;
+            margin-top: 5px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            transition: width 0.8s ease;
+        }
+        
+        .progress-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-input {
+            width: 80px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .progress-60 {
+            width: 60%;
+            background: linear-gradient(to right, #4cd964, #2ac845);
+        }
+        
+        .progress-40 {
+            width: 40%;
+            background: linear-gradient(to right, #ffcc00, #ff9500);
+        }
+        
+        .progress-0 {
+            width: 0%;
+            background: linear-gradient(to right, #ff3b30, #ff1a1a);
+        }
+        
+        .progress-text {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .milestone-section, .note-section {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #1a6bc4;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8f2ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .milestone-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .milestone-card {
+            background: #f9fbfd;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #1a6bc4;
+            transition: transform 0.3s;
+        }
+        
+        .milestone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .milestone-date, .milestone-event, .milestone-deliverable {
+            padding: 8px 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin-bottom: 8px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .milestone-date:hover, .milestone-event:hover, .milestone-deliverable:hover {
+            border-color: #1a6bc4;
+            background-color: #f8fbff;
+        }
+        
+        .milestone-date {
+            font-weight: 600;
+            color: #1a6bc4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .milestone-event {
+            font-weight: 600;
+            color: #222;
+            font-size: 1.1rem;
+        }
+        
+        .milestone-deliverable {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .note-title {
+            font-size: 1.5rem;
+            color: #cc9900;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .note-list {
+            list-style-type: none;
+        }
+        
+        .note-list li {
+            margin-bottom: 12px;
+            padding: 10px 10px 10px 30px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .note-list li:hover {
+            border-color: #ffcc00;
+            background-color: #fffef5;
+        }
+        
+        .note-list li:before {
+            content: "•";
+            color: #ffcc00;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .note-item {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            color: #333;
+            outline: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: #1a6bc4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: #0d4d8a;
+            transform: translateY(-2px);
+        }
+        
+        .save-btn {
+            background: #2ac845;
+        }
+        
+        .save-btn:hover {
+            background: #1fa835;
+        }
+        
+        .add-btn {
+            background: #ff9500;
+        }
+        
+        .add-btn:hover {
+            background: #e68500;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            th, td {
+                padding: 15px 10px;
+            }
+            
+            .milestone-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                justify-content: center;
+            }
+            
+            .control-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .highlight {
+            background-color: #fffacd !important;
+            border-left: 3px solid #ffcc00;
+        }
+        
+        .edit-mode {
+            border-color: #1a6bc4 !important;
+            background-color: #f0f7ff !important;
+        }
+        
+        .save-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2ac845;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .editable {
+            cursor: text;
+        }
+        
+        .editable:focus {
+            outline: 2px solid #1a6bc4;
+            background-color: white;
+        }
+        
+        .delete-btn {
+            background-color: #ff3b30;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-left: 5px;
+        }
+        
+        .task-row:hover .delete-btn {
+            opacity: 1;
+        }
+        
+        .delete-btn:hover {
+            background-color: #e02a20;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1><i class="fas fa-calendar-alt"></i> 科研任务时间规划表</h1>
+            <div class="subtitle">冲击仿真、神经网络建模与论文撰写进度跟踪</div>
+            <div class="edit-notice">
+                <i class="fas fa-edit"></i> 提示：点击任意文字区域即可编辑内容
+            </div>
             <div class="time-range">
-                <i class="fas fa-calendar-day"></i>
-                <span>2026年1月22日 - 2026年4月26日</span>
+                <i class="fas fa-calendar-day calendar-icon"></i>
+                <span contenteditable="true" class="editable">2026年1月 - 2026年4月</span>
             </div>
         </header>
-
+        
+        <div class="controls">
+            <button class="control-btn" id="highlightBtn">
+                <i class="fas fa-highlighter"></i> 高亮当前任务
+            </button>
+            <button class="control-btn add-btn" id="addTaskBtn">
+                <i class="fas fa-plus"></i> 添加新任务
+            </button>
+            <button class="control-btn save-btn" id="saveBtn">
+                <i class="fas fa-save"></i> 保存所有更改
+            </button>
+            <button class="control-btn" id="printBtn">
+                <i class="fas fa-print"></i> 打印计划表
+            </button>
+        </div>
+        
         <div class="table-container">
-            <table>
+            <table id="planTable">
                 <thead>
                     <tr>
                         <th width="15%">时间段</th>
                         <th width="20%">主要任务</th>
                         <th width="35%">任务描述</th>
-                        <th width="10%">预计耗时</th>
-                        <th width="20%">进度标识</th>
+                        <th width="15%">预计耗时</th>
+                        <th width="15%">进度标识</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1.22 - 2.6</td>
-                        <td>1. 修改冲击代码与仿真验证；2. 完成材料测试学习，安排材料测试样品计划；3. 完成小论文框架搭建</td>
-                        <td>1. 已完成动力曲线拟合匹配；待完成损伤面积提取；2. 已去cemar咨询材料测试要求，梳理清单，待王伟看过后准备打样；3. 已完成5k字论文框架，待增加试验数据</td>
-                        <td><span class="duration">14天</span></td>
-                        <td>95% (进行中)</td>
+                    <tr id="task1" class="task-row">
+                        <td>
+                            <div class="time-period editable" contenteditable="true">1.22 - 2.6</div>
+                        </td>
+                        <td>
+                            <div class="task-name editable" contenteditable="true">1. 修改冲击代码与仿真验证； 2.完成材料测试学习，安排材料测试样品计划； 3.完成小论文框架搭</div>
+                        </td>
+                        <td>
+                            <div class="task-desc editable" contenteditable="true">1.已完成力-时间曲线拟合匹配； 待完成损伤面积提取； 2. 已去cemar咨询材料测试要求， 梳理清单，待王伟看过后准备打样； 3.已完成5k字论文框架，待增加试验数据</div>
+                        </td>
+                        <td>
+                            <div class="duration editable" contenteditable="true">14 天</div>
+                        </td>
+                        <td>
+                            <div class="progress-input-container">
+                                <input type="number" class="progress-input" min="0" max="100" value="95"> %
+                            </div>
+                            <div class="progress-text">进行中</div>
+                            <button class="delete-btn" onclick="deleteTask(1)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>2.9 - 2.14</td>
-                        <td>请假中：期间与厂家沟通样品打样事宜</td>
-                        <td>王伟看过后，可启动沟通打样</td>
-                        <td><span class="duration">5天</span></td>
-                        <td>0% (已开始)</td>
+                    <tr id="task2" class="task-row">
+                        <td>
+                            <div class="time-period editable" contenteditable="true">2.9 - 2.14</div>
+                        </td>
+                        <td>
+                            <div class="task-name editable" contenteditable="true">请假中：期间与厂家沟通样品打样事宜</div>
+                        </td>
+                        <td>
+                            <div class="task-desc editable" contenteditable="true">王伟看过后， 可启动沟通打样</div>
+                        </td>
+                        <td>
+                            <div class="duration editable" contenteditable="true">5天</div>
+                        </td>
+                        <td>
+                            <div class="progress-input-container">
+                                <input type="number" class="progress-input" min="0" max="100" value="40"> %
+                            </div>
+                            <div class="progress-text">未开始</div>
+                            <button class="delete-btn" onclick="deleteTask(2)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>2.15 - 2.24</td>
-                        <td>春节假期：电脑挂算例远程跑有限元</td>
-                        <td>运行约50组冲击仿真，每组约1h；积累数据用于后续分析</td>
-                        <td><span class="duration">9天</span></td>
-                        <td>0% (未开始)</td>
+                    <tr id="task3" class="task-row">
+                        <td>
+                            <div class="time-period editable" contenteditable="true">2.15 - 2.24</div>
+                        </td>
+                        <td>
+                            <div class="task-name editable" contenteditable="true">春节假期：电脑挂算例远程跑有限元</div>
+                        </td>
+                        <td>
+                            <div class="task-desc editable" contenteditable="true">运行约50组冲击仿真， 每组约1h； 积累数据用于后续分析</div>
+                        </td>
+                        <td>
+                            <div class="duration editable" contenteditable="true">9 天</div>
+                        </td>
+                        <td>
+                            <div class="progress-input-container">
+                                <input type="number" class="progress-input" min="0" max="100" value="0"> %
+                            </div>
+                            <div class="progress-text">未开始</div>
+                            <button class="delete-btn" onclick="deleteTask(3)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>2.25 - 3.25</td>
-                        <td>样品到货，安排材料力学参数测试</td>
-                        <td>春节过后样品到达可启动测试</td>
-                        <td><span class="duration">30天</span></td>
-                        <td>0% (未开始)</td>
+                    <tr id="task4" class="task-row">
+                        <td>
+                            <div class="time-period editable" contenteditable="true">2.25 - 3.25</div>
+                        </td>
+                        <td>
+                            <div class="task-name editable" contenteditable="true">样品到货，安排材料力学参数测试</div>
+                        </td>
+                        <td>
+                            <div class="task-desc editable" contenteditable="true">春节过后样品到达可启动测试</div>
+                        </td>
+                        <td>
+                            <div class="duration editable" contenteditable="true">30 天</div>
+                        </td>
+                        <td>
+                            <div class="progress-input-container">
+                                <input type="number" class="progress-input" min="0" max="100" value="0"> %
+                            </div>
+                            <div class="progress-text">未开始</div>
+                            <button class="delete-btn" onclick="deleteTask(4)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>3.26 - 4.26</td>
-                        <td>补充完毕数据，完成小论文所有数据、论文修改</td>
-                        <td>材料力学参数测试完毕与论文正、完整小论文试验实测数据进行参数修正、数据内容，做最后整理</td>
-                        <td><span class="duration">30天</span></td>
-                        <td>0% (未开始)</td>
+                    <tr id="task5" class="task-row">
+                        <td>
+                            <div class="time-period editable" contenteditable="true">3.26 - 4.26</div>
+                        </td>
+                        <td>
+                            <div class="task-name editable" contenteditable="true">补充完毕小论文所有数据，完成小论文修改</div>
+                        </td>
+                        <td>
+                            <div class="task-desc editable" contenteditable="true">材料力学参数测试完毕与论文实验数据进行参数修正， 完善小论文试验数据， 做最后整理</div>
+                        </td>
+                        <td>
+                            <div class="duration editable" contenteditable="true">30 天</div>
+                        </td>
+                        <td>
+                            <div class="progress-input-container">
+                                <input type="number" class="progress-input" min="0" max="100" value="0"> %
+                            </div>
+                            <div class="progress-text">未开始</div>
+                            <button class="delete-btn" onclick="deleteTask(4)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        <div class="milestone-section" style="background:white; padding:20px; border-radius:15px;">
-            <h2 style="color:#1a6bc4; margin-bottom:20px;">🚩 关键节点里程碑</h2>
+        
+        <div class="milestone-section">
+            <h2 class="section-title"><i class="fas fa-flag-checkered"></i> 
+                <span contenteditable="true" class="editable">关键节点里程碑</span>
+            </h2>
             <div class="milestone-container">
                 <div class="milestone-card">
-                    <div style="font-weight:bold; color:#1a6bc4;">2月6日</div>
-                    <div>材料力学测试梳理完成</div>
-                    <div style="font-size:0.8rem; color:#666;">梳理完成测试方案表格</div>
+                    <div class="milestone-date editable" contenteditable="true"><i class="far fa-calendar-check"></i> 2月6日</div>
+                    <div class="milestone-event editable" contenteditable="true">材料力学测试梳理完成</div>
+                    <div class="milestone-deliverable editable" contenteditable="true">梳理完成测试方案表格</div>
                 </div>
                 <div class="milestone-card">
-                    <div style="font-weight:bold; color:#1a6bc4;">2月24日</div>
-                    <div>数据积累完成</div>
-                    <div style="font-size:0.8rem; color:#666;">50组冲击仿真数据集（用于训练）</div>
+                    <div class="milestone-date editable" contenteditable="true"><i class="far fa-calendar-check"></i> 2月24日</div>
+                    <div class="milestone-event editable" contenteditable="true">数据积累完成</div>
+                    <div class="milestone-deliverable editable" contenteditable="true">50组冲击仿真数据集（可用于训练）</div>
                 </div>
                 <div class="milestone-card">
-                    <div style="font-weight:bold; color:#1a6bc4;">3月25日</div>
-                    <div>材料力学测试完成</div>
-                    <div style="font-size:0.8rem; color:#666;">获得仿真用的弹性模量、泊松比、剪切、拉伸等参数</div>
+                    <div class="milestone-date editable" contenteditable="true"><i class="far fa-calendar-check"></i> 3月25日</div>
+                    <div class="milestone-event editable" contenteditable="true">材料力学测试完成</div>
+                    <div class="milestone-deliverable editable" contenteditable="true">仿真用到的弹性模量， 泊松比， 剪切， 拉伸， 压缩等参数</div>
                 </div>
                 <div class="milestone-card">
-                    <div style="font-weight:bold; color:#1a6bc4;">4月26日</div>
-                    <div>小论文完成</div>
-                    <div style="font-size:0.8rem; color:#666;">完整论文初稿（含图表、分析、参考文献）</div>
+                    <div class="milestone-date editable" contenteditable="true"><i class="far fa-calendar-check"></i> 4月26日</div>
+                    <div class="milestone-event editable" contenteditable="true">小论文完成</div>
+                    <div class="milestone-deliverable editable" contenteditable="true">完整的论文初稿（含图表、分析、参考文献）</div>
                 </div>
             </div>
         </div>
+        
+        <div class="note-section">
+            <h2 class="note-title"><i class="fas fa-exclamation-circle"></i> 
+                <span contenteditable="true" class="editable">注意事项与优化建议</span>
+            </h2>
+            <ul class="note-list" id="noteList">
+                <li>
+                    <input type="text" class="note-item editable" value="数据积累阶段（1.6-1.20）建议使用并行计算或高性能计算集群，以缩短实际耗时。" contenteditable="true">
+                </li>
+                <li>
+                    <input type="text" class="note-item editable" value="神经网络构建（1.20-2.3）可在数据积累到一定程度后提前开始模型设计与数据预处理。" contenteditable="true">
+                </li>
+                <li>
+                    <input type="text" class="note-item editable" value="论文撰写建议提前准备结构框架，边产出结果边撰写相应部分，提高整体效率。" contenteditable="true">
+                </li>
+                <li>
+                    <input type="text" class="note-item editable" value="考虑预留10-15%的时间缓冲，以应对不可预见的挑战或技术问题。" contenteditable="true">
+                </li>
+                <li>
+                    <input type="text" class="note-item editable" value="建议每周进行一次进度检查，并根据实际情况调整后续计划。" contenteditable="true">
+                </li>
+            </ul>
+            <button class="control-btn add-btn" id="addNoteBtn" style="margin-top: 15px;">
+                <i class="fas fa-plus"></i> 添加新注意事项
+            </button>
+        </div>
+        
+        <footer>
+            <p contenteditable="true" class="editable">计划最后更新: 2026年2月 | 使用说明: 点击任意文字区域即可编辑，完成后点击保存</p>
+            <p contenteditable="true" class="editable">© 2026 科研项目管理 | 本计划表将根据实际进展动态更新</p>
+        </footer>
+        
+        <div class="save-indicator" id="saveIndicator">
+            <i class="fas fa-check-circle"></i>
+            <span>所有更改已保存！</span>
+        </div>
     </div>
+    
+    <script>
+        // 添加新任务
+        document.getElementById('addTaskBtn').addEventListener('click', function() {
+            const tableBody = document.querySelector('#planTable tbody');
+            const newRowId = 'task' + (tableBody.children.length + 1);
+            
+            const newRow = document.createElement('tr');
+            newRow.id = newRowId;
+            newRow.className = 'task-row';
+            
+            newRow.innerHTML = `
+                <td>
+                    <div class="time-period editable" contenteditable="true">新时间段</div>
+                </td>
+                <td>
+                    <div class="task-name editable" contenteditable="true">新任务名称</div>
+                </td>
+                <td>
+                    <div class="task-desc editable" contenteditable="true">新任务描述</div>
+                </td>
+                <td>
+                    <div class="duration editable" contenteditable="true">约 0 天</div>
+                </td>
+                <td>
+                    <div class="progress-input-container">
+                        <input type="number" class="progress-input" min="0" max="100" value="0"> %
+                    </div>
+                    <div class="progress-text">未开始</div>
+                    <button class="delete-btn" onclick="deleteTask(${tableBody.children.length + 1})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+            `;
+            
+            tableBody.appendChild(newRow);
+            
+            // 显示保存提示
+            showSaveIndicator('新任务已添加，请编辑内容');
+        });
+        
+        // 添加新注意事项
+        document.getElementById('addNoteBtn').addEventListener('click', function() {
+            const noteList = document.getElementById('noteList');
+            const newNoteItem = document.createElement('li');
+            
+            newNoteItem.innerHTML = `
+                <input type="text" class="note-item editable" value="新的注意事项..." contenteditable="true">
+            `;
+            
+            noteList.appendChild(newNoteItem);
+            showSaveIndicator('新注意事项已添加，请编辑内容');
+        });
+        
+        // 删除任务
+        function deleteTask(taskId) {
+            const taskRow = document.getElementById('task' + taskId);
+            if (taskRow && confirm('确定要删除这个任务吗？')) {
+                taskRow.remove();
+                
+                // 重新编号剩余的任务
+                const tableBody = document.querySelector('#planTable tbody');
+                const rows = tableBody.querySelectorAll('.task-row');
+                
+                rows.forEach((row, index) => {
+                    const newId = index + 1;
+                    row.id = 'task' + newId;
+                    
+                    // 更新删除按钮的onclick事件
+                    const deleteBtn = row.querySelector('.delete-btn');
+                    if (deleteBtn) {
+                        deleteBtn.setAttribute('onclick', `deleteTask(${newId})`);
+                    }
+                });
+                
+                showSaveIndicator('任务已删除');
+            }
+        }
+        
+        // 高亮当前任务
+        document.getElementById('highlightBtn').addEventListener('click', function() {
+            // 移除之前的高亮
+            const rows = document.querySelectorAll('#planTable tr');
+            rows.forEach(row => {
+                row.classList.remove('highlight');
+            });
+            
+            // 根据当前日期高亮对应任务
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1; // 1月=1, 2月=2
+            const currentDay = today.getDate();
+            
+            // 简单逻辑：如果当前日期在1.6-1.20之间，高亮任务2
+            if (currentMonth === 1 && currentDay >= 6 && currentDay <= 20) {
+                document.getElementById('task2').classList.add('highlight');
+                alert('已高亮当前正在进行中的任务：冲击仿真数据积累 (1.6-1.20)');
+            } else if (currentMonth === 1 && currentDay < 6) {
+                document.getElementById('task1').classList.add('highlight');
+                alert('已高亮当前正在进行中的任务：修改冲击代码与仿真验证 (1.23-1.6)');
+            } else if (currentMonth === 1 && currentDay > 20) {
+                document.getElementById('task3').classList.add('highlight');
+                alert('已高亮当前正在进行中的任务：神经网络预测模型构建 (1.20-2.3)');
+            } else {
+                alert('当前不在任何任务时间段内，请检查系统日期或手动选择任务');
+            }
+        });
+        
+        // 保存所有更改
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            // 收集所有数据
+            const planData = {
+                title: document.querySelector('h1').textContent,
+                timeRange: document.querySelector('.time-range span').textContent,
+                lastUpdate: document.querySelector('footer p:first-child').textContent,
+                tasks: [],
+                milestones: [],
+                notes: []
+            };
+            
+            // 收集任务数据
+            const taskRows = document.querySelectorAll('.task-row');
+            taskRows.forEach(row => {
+                const timePeriod = row.querySelector('.time-period').textContent;
+                const taskName = row.querySelector('.task-name').textContent;
+                const taskDesc = row.querySelector('.task-desc').textContent;
+                const duration = row.querySelector('.duration').textContent;
+                const progress = row.querySelector('.progress-input').value;
+                
+                planData.tasks.push({
+                    timePeriod,
+                    taskName,
+                    taskDesc,
+                    duration,
+                    progress
+                });
+            });
+            
+            // 收集里程碑数据
+            const milestoneCards = document.querySelectorAll('.milestone-card');
+            milestoneCards.forEach(card => {
+                const date = card.querySelector('.milestone-date').textContent;
+                const event = card.querySelector('.milestone-event').textContent;
+                const deliverable = card.querySelector('.milestone-deliverable').textContent;
+                
+                planData.milestones.push({
+                    date,
+                    event,
+                    deliverable
+                });
+            });
+            
+            // 收集注意事项数据
+            const noteItems = document.querySelectorAll('.note-item');
+            noteItems.forEach(item => {
+                planData.notes.push(item.value);
+            });
+            
+            // 在实际应用中，这里可以将planData发送到服务器保存
+            // 现在我们先在控制台显示，并保存到localStorage
+            console.log('保存的数据:', planData);
+            localStorage.setItem('researchPlanData', JSON.stringify(planData));
+            
+            // 显示保存成功的提示
+            showSaveIndicator('所有更改已保存到本地存储！');
+        });
+        
+        // 打印功能
+        document.getElementById('printBtn').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // 显示保存提示
+        function showSaveIndicator(message) {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.querySelector('span').textContent = message;
+            indicator.style.display = 'flex';
+            
+            setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 3000);
+        }
+        
+        // 从localStorage加载已保存的数据
+        function loadSavedData() {
+            const savedData = localStorage.getItem('researchPlanData');
+            if (savedData) {
+                try {
+                    const planData = JSON.parse(savedData);
+                    
+                    // 设置标题和时间范围
+                    document.querySelector('.time-range span').textContent = planData.timeRange || '2026年1月 - 2026年10月';
+                    if (planData.lastUpdate) {
+                        document.querySelector('footer p:first-child').textContent = planData.lastUpdate;
+                    }
+                    
+                    // 加载任务数据（这里只处理已有任务，不添加新任务）
+                    const taskRows = document.querySelectorAll('.task-row');
+                    if (planData.tasks && planData.tasks.length > 0) {
+                        planData.tasks.forEach((task, index) => {
+                            if (taskRows[index]) {
+                                taskRows[index].querySelector('.time-period').textContent = task.timePeriod;
+                                taskRows[index].querySelector('.task-name').textContent = task.taskName;
+                                taskRows[index].querySelector('.task-desc').textContent = task.taskDesc;
+                                taskRows[index].querySelector('.duration').textContent = task.duration;
+                                taskRows[index].querySelector('.progress-input').value = task.progress;
+                            }
+                        });
+                    }
+                    
+                    // 加载里程碑数据
+                    const milestoneCards = document.querySelectorAll('.milestone-card');
+                    if (planData.milestones && planData.milestones.length > 0) {
+                        planData.milestones.forEach((milestone, index) => {
+                            if (milestoneCards[index]) {
+                                milestoneCards[index].querySelector('.milestone-date').textContent = milestone.date;
+                                milestoneCards[index].querySelector('.milestone-event').textContent = milestone.event;
+                                milestoneCards[index].querySelector('.milestone-deliverable').textContent = milestone.deliverable;
+                            }
+                        });
+                    }
+                    
+                    // 加载注意事项数据
+                    const noteItems = document.querySelectorAll('.note-item');
+                    if (planData.notes && planData.notes.length > 0) {
+                        planData.notes.forEach((note, index) => {
+                            if (noteItems[index]) {
+                                noteItems[index].value = note;
+                            }
+                        });
+                    }
+                    
+                    console.log('已从本地存储加载数据');
+                } catch (e) {
+                    console.error('加载保存的数据时出错:', e);
+                }
+            }
+        }
+        
+        // 页面加载时尝试加载已保存的数据
+        window.addEventListener('load', function() {
+            loadSavedData();
+            
+            // 自动保存功能：每60秒自动保存一次
+            setInterval(function() {
+                const saveBtn = document.getElementById('saveBtn');
+                saveBtn.click();
+            }, 60000); // 60秒
+        });
+        
+        // 添加编辑时的视觉反馈
+        document.addEventListener('focus', function(e) {
+            if (e.target.classList.contains('editable')) {
+                e.target.classList.add('edit-mode');
+            }
+        }, true);
+        
+        document.addEventListener('blur', function(e) {
+            if (e.target.classList.contains('editable')) {
+                e.target.classList.remove('edit-mode');
+            }
+        }, true);
+    </script>
 </body>
 </html>
